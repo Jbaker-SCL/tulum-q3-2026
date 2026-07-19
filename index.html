@@ -203,8 +203,12 @@
     background: linear-gradient(90deg, var(--gold-2), var(--gold-1));
     animation: ladder-fill-in 900ms ease-out both;
   }
-  .ladder-targets { margin-top: 8px; font-size: 11.5px; color: var(--slate); }
+  .ladder-targets { margin-top: 8px; font-size: 11.5px; color: var(--slate); display: flex; flex-direction: column; gap: 4px; }
   .ladder-targets .mono { color: var(--navy); font-weight: 700; }
+  .ladder-targets .lt-line { }
+  .ladder-targets .lt-team { font-weight: 700; }
+  .ladder-targets .lt-team.cb { color: var(--gold-2); }
+  .ladder-targets .lt-team.fd { color: var(--blue); }
   @keyframes ladder-fill-in { from { width: 0%; } to { width: var(--fill, 0%); } }
   @media (prefers-reduced-motion: reduce) { .ladder-fill { animation: none; width: var(--fill, 0%); } }
   .ladder-note { margin-top: 4px; font-size: 12px; color: var(--gold-2); font-weight: 700; }
@@ -419,7 +423,7 @@
   <section>
     <div class="section-label"><span class="num mono">07</span><h2>The pace</h2></div>
     <hr class="section-rule" />
-    <p>Thirteen weeks. This is what "on pace" looks like, week by week — the bar builds toward 100% the same way your funded volume should.</p>
+    <p>These are <strong>your own numbers</strong>, not the team's — the same personal bar from "Your seat" ($700,000 City Boys / $550,000 Ferda), broken into 13 weeks so you can check yourself against it any time. Find your team's line below, not both.</p>
     <div class="ladder">
       <div class="ladder-row milestone">
         <div class="ladder-top">
@@ -427,7 +431,10 @@
           <div class="ladder-pct">8%</div>
         </div>
         <div class="ladder-track"><div class="ladder-fill" style="--fill:7.7%; animation-delay:0ms;"></div></div>
-        <div class="ladder-targets">On pace: City Boys <span class="mono">$53,846</span> &middot; Ferda <span class="mono">$42,308</span> funded so far</div>
+        <div class="ladder-targets">
+          <div class="lt-line"><span class="lt-team cb">You, City Boys rep</span> — personally funded <span class="mono">$53,846</span> by now</div>
+          <div class="lt-line"><span class="lt-team fd">You, Ferda rep</span> — personally funded <span class="mono">$42,308</span> by now</div>
+        </div>
         <div class="ladder-note">&#9679; Q3 opens</div>
       </div>
       <div class="ladder-row">
@@ -436,7 +443,10 @@
           <div class="ladder-pct">15%</div>
         </div>
         <div class="ladder-track"><div class="ladder-fill" style="--fill:15.4%; animation-delay:35ms;"></div></div>
-        <div class="ladder-targets">On pace: City Boys <span class="mono">$107,692</span> &middot; Ferda <span class="mono">$84,615</span> funded so far</div>
+        <div class="ladder-targets">
+          <div class="lt-line"><span class="lt-team cb">You, City Boys rep</span> — personally funded <span class="mono">$107,692</span> by now</div>
+          <div class="lt-line"><span class="lt-team fd">You, Ferda rep</span> — personally funded <span class="mono">$84,615</span> by now</div>
+        </div>
         
       </div>
       <div class="ladder-row">
@@ -445,7 +455,10 @@
           <div class="ladder-pct">23%</div>
         </div>
         <div class="ladder-track"><div class="ladder-fill" style="--fill:23.1%; animation-delay:70ms;"></div></div>
-        <div class="ladder-targets">On pace: City Boys <span class="mono">$161,538</span> &middot; Ferda <span class="mono">$126,923</span> funded so far</div>
+        <div class="ladder-targets">
+          <div class="lt-line"><span class="lt-team cb">You, City Boys rep</span> — personally funded <span class="mono">$161,538</span> by now</div>
+          <div class="lt-line"><span class="lt-team fd">You, Ferda rep</span> — personally funded <span class="mono">$126,923</span> by now</div>
+        </div>
         
       </div>
       <div class="ladder-row milestone">
@@ -454,7 +467,10 @@
           <div class="ladder-pct">31%</div>
         </div>
         <div class="ladder-track"><div class="ladder-fill" style="--fill:30.8%; animation-delay:105ms;"></div></div>
-        <div class="ladder-targets">On pace: City Boys <span class="mono">$215,385</span> &middot; Ferda <span class="mono">$169,231</span> funded so far</div>
+        <div class="ladder-targets">
+          <div class="lt-line"><span class="lt-team cb">You, City Boys rep</span> — personally funded <span class="mono">$215,385</span> by now</div>
+          <div class="lt-line"><span class="lt-team fd">You, Ferda rep</span> — personally funded <span class="mono">$169,231</span> by now</div>
+        </div>
         <div class="ladder-note">&#9679; Month 1 check-in</div>
       </div>
       <div class="ladder-row">
@@ -463,7 +479,10 @@
           <div class="ladder-pct">38%</div>
         </div>
         <div class="ladder-track"><div class="ladder-fill" style="--fill:38.5%; animation-delay:140ms;"></div></div>
-        <div class="ladder-targets">On pace: City Boys <span class="mono">$269,231</span> &middot; Ferda <span class="mono">$211,538</span> funded so far</div>
+        <div class="ladder-targets">
+          <div class="lt-line"><span class="lt-team cb">You, City Boys rep</span> — personally funded <span class="mono">$269,231</span> by now</div>
+          <div class="lt-line"><span class="lt-team fd">You, Ferda rep</span> — personally funded <span class="mono">$211,538</span> by now</div>
+        </div>
         
       </div>
       <div class="ladder-row">
@@ -472,7 +491,10 @@
           <div class="ladder-pct">46%</div>
         </div>
         <div class="ladder-track"><div class="ladder-fill" style="--fill:46.2%; animation-delay:175ms;"></div></div>
-        <div class="ladder-targets">On pace: City Boys <span class="mono">$323,077</span> &middot; Ferda <span class="mono">$253,846</span> funded so far</div>
+        <div class="ladder-targets">
+          <div class="lt-line"><span class="lt-team cb">You, City Boys rep</span> — personally funded <span class="mono">$323,077</span> by now</div>
+          <div class="lt-line"><span class="lt-team fd">You, Ferda rep</span> — personally funded <span class="mono">$253,846</span> by now</div>
+        </div>
         
       </div>
       <div class="ladder-row">
@@ -481,7 +503,10 @@
           <div class="ladder-pct">54%</div>
         </div>
         <div class="ladder-track"><div class="ladder-fill" style="--fill:53.8%; animation-delay:210ms;"></div></div>
-        <div class="ladder-targets">On pace: City Boys <span class="mono">$376,923</span> &middot; Ferda <span class="mono">$296,154</span> funded so far</div>
+        <div class="ladder-targets">
+          <div class="lt-line"><span class="lt-team cb">You, City Boys rep</span> — personally funded <span class="mono">$376,923</span> by now</div>
+          <div class="lt-line"><span class="lt-team fd">You, Ferda rep</span> — personally funded <span class="mono">$296,154</span> by now</div>
+        </div>
         
       </div>
       <div class="ladder-row">
@@ -490,7 +515,10 @@
           <div class="ladder-pct">62%</div>
         </div>
         <div class="ladder-track"><div class="ladder-fill" style="--fill:61.5%; animation-delay:245ms;"></div></div>
-        <div class="ladder-targets">On pace: City Boys <span class="mono">$430,769</span> &middot; Ferda <span class="mono">$338,462</span> funded so far</div>
+        <div class="ladder-targets">
+          <div class="lt-line"><span class="lt-team cb">You, City Boys rep</span> — personally funded <span class="mono">$430,769</span> by now</div>
+          <div class="lt-line"><span class="lt-team fd">You, Ferda rep</span> — personally funded <span class="mono">$338,462</span> by now</div>
+        </div>
         
       </div>
       <div class="ladder-row milestone">
@@ -499,7 +527,10 @@
           <div class="ladder-pct">69%</div>
         </div>
         <div class="ladder-track"><div class="ladder-fill" style="--fill:69.2%; animation-delay:280ms;"></div></div>
-        <div class="ladder-targets">On pace: City Boys <span class="mono">$484,615</span> &middot; Ferda <span class="mono">$380,769</span> funded so far</div>
+        <div class="ladder-targets">
+          <div class="lt-line"><span class="lt-team cb">You, City Boys rep</span> — personally funded <span class="mono">$484,615</span> by now</div>
+          <div class="lt-line"><span class="lt-team fd">You, Ferda rep</span> — personally funded <span class="mono">$380,769</span> by now</div>
+        </div>
         <div class="ladder-note">&#9679; Month 2 check-in</div>
       </div>
       <div class="ladder-row">
@@ -508,7 +539,10 @@
           <div class="ladder-pct">77%</div>
         </div>
         <div class="ladder-track"><div class="ladder-fill" style="--fill:76.9%; animation-delay:315ms;"></div></div>
-        <div class="ladder-targets">On pace: City Boys <span class="mono">$538,462</span> &middot; Ferda <span class="mono">$423,077</span> funded so far</div>
+        <div class="ladder-targets">
+          <div class="lt-line"><span class="lt-team cb">You, City Boys rep</span> — personally funded <span class="mono">$538,462</span> by now</div>
+          <div class="lt-line"><span class="lt-team fd">You, Ferda rep</span> — personally funded <span class="mono">$423,077</span> by now</div>
+        </div>
         
       </div>
       <div class="ladder-row">
@@ -517,7 +551,10 @@
           <div class="ladder-pct">85%</div>
         </div>
         <div class="ladder-track"><div class="ladder-fill" style="--fill:84.6%; animation-delay:350ms;"></div></div>
-        <div class="ladder-targets">On pace: City Boys <span class="mono">$592,308</span> &middot; Ferda <span class="mono">$465,385</span> funded so far</div>
+        <div class="ladder-targets">
+          <div class="lt-line"><span class="lt-team cb">You, City Boys rep</span> — personally funded <span class="mono">$592,308</span> by now</div>
+          <div class="lt-line"><span class="lt-team fd">You, Ferda rep</span> — personally funded <span class="mono">$465,385</span> by now</div>
+        </div>
         
       </div>
       <div class="ladder-row">
@@ -526,7 +563,10 @@
           <div class="ladder-pct">92%</div>
         </div>
         <div class="ladder-track"><div class="ladder-fill" style="--fill:92.3%; animation-delay:385ms;"></div></div>
-        <div class="ladder-targets">On pace: City Boys <span class="mono">$646,154</span> &middot; Ferda <span class="mono">$507,692</span> funded so far</div>
+        <div class="ladder-targets">
+          <div class="lt-line"><span class="lt-team cb">You, City Boys rep</span> — personally funded <span class="mono">$646,154</span> by now</div>
+          <div class="lt-line"><span class="lt-team fd">You, Ferda rep</span> — personally funded <span class="mono">$507,692</span> by now</div>
+        </div>
         
       </div>
       <div class="ladder-row milestone">
@@ -535,7 +575,10 @@
           <div class="ladder-pct">100%</div>
         </div>
         <div class="ladder-track"><div class="ladder-fill" style="--fill:100.0%; animation-delay:420ms;"></div></div>
-        <div class="ladder-targets">On pace: City Boys <span class="mono">$700,000</span> &middot; Ferda <span class="mono">$550,000</span> funded so far</div>
+        <div class="ladder-targets">
+          <div class="lt-line"><span class="lt-team cb">You, City Boys rep</span> — personally funded <span class="mono">$700,000</span> by now</div>
+          <div class="lt-line"><span class="lt-team fd">You, Ferda rep</span> — personally funded <span class="mono">$550,000</span> by now</div>
+        </div>
         <div class="ladder-note">&#9679; Q3 closes — qualifying reps confirmed early October</div>
       </div>
     </div>
