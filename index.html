@@ -54,7 +54,7 @@
   }
 
   * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--navy); }
+  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--navy); overflow-x: hidden; max-width: 100%; }
   body {
     font-family: -apple-system, "SF Pro Display", "Segoe UI", system-ui, sans-serif;
     font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased;
@@ -146,12 +146,18 @@
   .why-box .fine { font-size: 13px; color: var(--slate); line-height: 1.6; }
   .why-box .fine strong { color: var(--navy); }
 
-  .counts-table { margin-top: 24px; border: 1px solid var(--line); border-radius: 10px; overflow: auto; background: var(--card-bg); }
-  table.counts { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 520px; }
-  table.counts th { text-align: left; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue); font-weight: 700; padding: 12px 16px; border-bottom: 1px solid var(--line); }
-  table.counts td { padding: 13px 16px; border-bottom: 1px solid var(--line); color: var(--slate); }
-  table.counts tr:last-child td { border-bottom: none; }
-  table.counts td.weight { font-family: ui-monospace, monospace; font-variant-numeric: tabular-nums; color: var(--navy); font-weight: 700; text-align: right; }
+  /* ---- what-counts: visual weight bars, mobile-safe (no table, no forced width) ---- */
+  .counts-cards { margin-top: 22px; display: flex; flex-direction: column; gap: 14px; }
+  .counts-card { border: 1px solid var(--line); border-radius: 10px; background: var(--card-bg); padding: 16px 18px; box-shadow: var(--shadow); }
+  .counts-card .cc-product { font-size: 14px; color: var(--navy); font-weight: 700; margin-bottom: 12px; }
+  .counts-card .cc-team-row { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+  .counts-card .cc-team-row:first-of-type { margin-top: 0; }
+  .counts-card .cc-label { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--slate-soft); font-weight: 700; width: 62px; flex-shrink: 0; }
+  .counts-card .cc-bar-track { flex: 1; height: 8px; border-radius: 100px; background: var(--line); overflow: hidden; min-width: 0; }
+  .counts-card .cc-bar-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--gold-2), var(--gold-1)); width: 0%; animation: cc-fill 1100ms ease-out 150ms both; }
+  .counts-card .cc-pct { font-family: ui-monospace, monospace; font-variant-numeric: tabular-nums; font-size: 13px; font-weight: 700; color: var(--navy); width: 40px; text-align: right; flex-shrink: 0; }
+  @keyframes cc-fill { from { width: 0%; } to { width: var(--fill, 100%); } }
+  @media (prefers-reduced-motion: reduce) { .counts-card .cc-bar-fill { animation: none; width: var(--fill, 100%); } }
   .pill { display: inline-block; padding: 2px 9px; border-radius: 100px; font-size: 11.5px; font-weight: 700; }
   .pill.full { background: var(--blue-soft); color: var(--blue); }
 
@@ -180,22 +186,28 @@
   .story-body .lesson strong { color: var(--navy); }
 
   /* ---- calendars ---- */
-  .cal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 24px; }
-  .cal-month { background: var(--card-bg); border: 1px solid var(--line); border-radius: 10px; padding: 14px; box-shadow: var(--shadow); }
-  .cal-month .cal-title { font-size: 12.5px; font-weight: 800; color: var(--navy); margin-bottom: 10px; text-align: center; }
-  .cal-dow { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; margin-bottom: 4px; }
-  .cal-dow span { font-size: 9px; text-align: center; color: var(--slate-soft); font-weight: 700; }
-  .cal-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
-  .cal-days .d {
-    aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-family: ui-monospace, monospace; font-variant-numeric: tabular-nums; color: var(--slate); border-radius: 5px;
+  /* ---- pace ladder: 13 weeks of Q3, a bar that visibly builds toward the goal ---- */
+  .ladder { margin-top: 24px; display: flex; flex-direction: column; gap: 10px; }
+  .ladder-row {
+    border: 1px solid var(--line); border-radius: 10px; background: var(--card-bg);
+    padding: 12px 16px; box-shadow: var(--shadow);
   }
-  .cal-days .d.blank { visibility: hidden; }
-  .cal-days .d.mark {
-    background: linear-gradient(180deg, var(--gold-1), var(--gold-2)); color: var(--navy-deep); font-weight: 800;
+  .ladder-row.milestone { border-color: color-mix(in srgb, var(--gold-2) 45%, var(--line)); }
+  .ladder-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+  .ladder-week { font-size: 12.5px; font-weight: 800; color: var(--navy); }
+  .ladder-dates { font-size: 11.5px; color: var(--slate-soft); margin-left: 6px; font-weight: 500; }
+  .ladder-pct { font-family: ui-monospace, monospace; font-variant-numeric: tabular-nums; font-size: 12px; font-weight: 700; color: var(--gold-2); flex-shrink: 0; }
+  .ladder-track { height: 10px; border-radius: 100px; background: var(--line); overflow: hidden; }
+  .ladder-fill {
+    height: 100%; border-radius: 100px; width: 0%;
+    background: linear-gradient(90deg, var(--gold-2), var(--gold-1));
+    animation: ladder-fill-in 900ms ease-out both;
   }
-  .cal-legend { margin-top: 10px; font-size: 10.5px; color: var(--slate); line-height: 1.5; }
-  .cal-legend strong { color: var(--navy); }
+  .ladder-targets { margin-top: 8px; font-size: 11.5px; color: var(--slate); }
+  .ladder-targets .mono { color: var(--navy); font-weight: 700; }
+  @keyframes ladder-fill-in { from { width: 0%; } to { width: var(--fill, 0%); } }
+  @media (prefers-reduced-motion: reduce) { .ladder-fill { animation: none; width: var(--fill, 0%); } }
+  .ladder-note { margin-top: 4px; font-size: 12px; color: var(--gold-2); font-weight: 700; }
 
   .closer { margin-top: 64px; padding: 32px 28px 0; border-top: 1px solid var(--line); }
   .closer .line { font-size: 20px; font-weight: 800; color: var(--navy); text-wrap: balance; }
@@ -205,7 +217,6 @@
   @media (max-width: 640px) {
     .trip-facts { grid-template-columns: 1fr; }
     .team-grid { grid-template-columns: 1fr; }
-    .cal-grid { grid-template-columns: 1fr; }
     .story-card { flex-direction: column; }
     .datestamp { width: 100%; }
   }
@@ -225,7 +236,7 @@
     body { background: var(--paper); }
     .page { padding-bottom: 24px; }
     section { margin-top: 30px; break-inside: avoid; }
-    .goal-compare, .team-card, .counts-table, .catchup-box, .trip-fact, .story-card, .cal-month { break-inside: avoid; }
+    .goal-compare, .team-card, .counts-card, .catchup-box, .trip-fact, .story-card, .ladder-row { break-inside: avoid; }
     .closer { break-inside: avoid; }
     .hero-shimmer { display: none; }
   }
@@ -342,14 +353,33 @@
     <div class="section-label"><span class="num mono">04</span><h2>What counts</h2></div>
     <hr class="section-rule" />
     <p>Every funded dollar counts toward the <strong>team's</strong> $25,000,000 in full. Toward <strong>your own</strong> number, weighting applies — it rewards the deals that build the business, not just the biggest figure on paper. Deals under $10,000 don't count toward either number.</p>
-    <div class="counts-table">
-      <table class="counts">
-        <thead><tr><th>Product</th><th>Team goal</th><th style="text-align:right;">City Boys</th><th style="text-align:right;">Ferda</th></tr></thead>
-        <tbody>
-          <tr><td>MCA &middot; LOC &middot; HELOC &middot; Equipment &middot; Bridge</td><td><span class="pill full">Full value</span></td><td class="weight">100%</td><td class="weight">100%</td></tr>
-          <tr><td>SBA &middot; CRE &middot; Reverse Consolidation</td><td><span class="pill full">Full value</span></td><td class="weight">40%</td><td class="weight">25%</td></tr>
-        </tbody>
-      </table>
+    <div class="counts-cards">
+      <div class="counts-card">
+        <div class="cc-product">MCA &middot; LOC &middot; HELOC &middot; Equipment &middot; Bridge <span class="pill full" style="margin-left:6px;">Team: full value</span></div>
+        <div class="cc-team-row">
+          <span class="cc-label">City Boys</span>
+          <div class="cc-bar-track"><div class="cc-bar-fill" style="--fill:100%"></div></div>
+          <span class="cc-pct">100%</span>
+        </div>
+        <div class="cc-team-row">
+          <span class="cc-label">Ferda</span>
+          <div class="cc-bar-track"><div class="cc-bar-fill" style="--fill:100%"></div></div>
+          <span class="cc-pct">100%</span>
+        </div>
+      </div>
+      <div class="counts-card">
+        <div class="cc-product">SBA &middot; CRE &middot; Reverse Consolidation <span class="pill full" style="margin-left:6px;">Team: full value</span></div>
+        <div class="cc-team-row">
+          <span class="cc-label">City Boys</span>
+          <div class="cc-bar-track"><div class="cc-bar-fill" style="--fill:40%"></div></div>
+          <span class="cc-pct">40%</span>
+        </div>
+        <div class="cc-team-row">
+          <span class="cc-label">Ferda</span>
+          <div class="cc-bar-track"><div class="cc-bar-fill" style="--fill:25%"></div></div>
+          <span class="cc-pct">25%</span>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -387,46 +417,126 @@
   </section>
 
   <section>
-    <div class="section-label"><span class="num mono">07</span><h2>The calendar</h2></div>
+    <div class="section-label"><span class="num mono">07</span><h2>The pace</h2></div>
     <hr class="section-rule" />
-    <p>Ninety days, marked out. The gold dates are the ones that matter.</p>
-    <div class="cal-grid">
-      <div class="cal-month">
-        <div class="cal-title">JULY 2026</div>
-        <div class="cal-dow"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
-        <div class="cal-days">
-          <span class="d blank"></span><span class="d blank"></span><span class="d blank"></span><span class="d mark">1</span><span class="d">2</span><span class="d">3</span><span class="d">4</span>
-          <span class="d">5</span><span class="d">6</span><span class="d">7</span><span class="d">8</span><span class="d">9</span><span class="d">10</span><span class="d">11</span>
-          <span class="d">12</span><span class="d">13</span><span class="d">14</span><span class="d">15</span><span class="d">16</span><span class="d">17</span><span class="d">18</span>
-          <span class="d">19</span><span class="d">20</span><span class="d">21</span><span class="d">22</span><span class="d">23</span><span class="d">24</span><span class="d">25</span>
-          <span class="d">26</span><span class="d">27</span><span class="d">28</span><span class="d">29</span><span class="d">30</span><span class="d mark">31</span><span class="d blank"></span>
+    <p>Thirteen weeks. This is what "on pace" looks like, week by week — the bar builds toward 100% the same way your funded volume should.</p>
+    <div class="ladder">
+      <div class="ladder-row milestone">
+        <div class="ladder-top">
+          <div><span class="ladder-week">Week 1</span><span class="ladder-dates">Jul 1–7</span></div>
+          <div class="ladder-pct">8%</div>
         </div>
-        <div class="cal-legend"><strong>Jul 1</strong> — Q3 opens &middot; <strong>Jul 31</strong> — Month 1 check-in</div>
+        <div class="ladder-track"><div class="ladder-fill" style="--fill:7.7%; animation-delay:0ms;"></div></div>
+        <div class="ladder-targets">On pace: City Boys <span class="mono">$53,846</span> &middot; Ferda <span class="mono">$42,308</span> funded so far</div>
+        <div class="ladder-note">&#9679; Q3 opens</div>
       </div>
-      <div class="cal-month">
-        <div class="cal-title">AUGUST 2026</div>
-        <div class="cal-dow"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
-        <div class="cal-days">
-          <span class="d blank"></span><span class="d blank"></span><span class="d blank"></span><span class="d blank"></span><span class="d blank"></span><span class="d blank"></span><span class="d">1</span>
-          <span class="d">2</span><span class="d">3</span><span class="d">4</span><span class="d">5</span><span class="d">6</span><span class="d">7</span><span class="d">8</span>
-          <span class="d">9</span><span class="d">10</span><span class="d">11</span><span class="d">12</span><span class="d">13</span><span class="d">14</span><span class="d">15</span>
-          <span class="d">16</span><span class="d">17</span><span class="d">18</span><span class="d">19</span><span class="d">20</span><span class="d">21</span><span class="d">22</span>
-          <span class="d">23</span><span class="d">24</span><span class="d">25</span><span class="d">26</span><span class="d">27</span><span class="d">28</span><span class="d">29</span>
-          <span class="d mark">30</span><span class="d mark">31</span><span class="d blank"></span><span class="d blank"></span><span class="d blank"></span><span class="d blank"></span><span class="d blank"></span>
+      <div class="ladder-row">
+        <div class="ladder-top">
+          <div><span class="ladder-week">Week 2</span><span class="ladder-dates">Jul 8–14</span></div>
+          <div class="ladder-pct">15%</div>
         </div>
-        <div class="cal-legend"><strong>Aug 31</strong> — Month 2 check-in</div>
+        <div class="ladder-track"><div class="ladder-fill" style="--fill:15.4%; animation-delay:35ms;"></div></div>
+        <div class="ladder-targets">On pace: City Boys <span class="mono">$107,692</span> &middot; Ferda <span class="mono">$84,615</span> funded so far</div>
+        
       </div>
-      <div class="cal-month">
-        <div class="cal-title">SEPTEMBER 2026</div>
-        <div class="cal-dow"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
-        <div class="cal-days">
-          <span class="d blank"></span><span class="d blank"></span><span class="d">1</span><span class="d">2</span><span class="d">3</span><span class="d">4</span><span class="d">5</span>
-          <span class="d">6</span><span class="d">7</span><span class="d">8</span><span class="d">9</span><span class="d">10</span><span class="d">11</span><span class="d">12</span>
-          <span class="d">13</span><span class="d">14</span><span class="d">15</span><span class="d">16</span><span class="d">17</span><span class="d">18</span><span class="d">19</span>
-          <span class="d">20</span><span class="d">21</span><span class="d">22</span><span class="d">23</span><span class="d">24</span><span class="d">25</span><span class="d">26</span>
-          <span class="d">27</span><span class="d">28</span><span class="d">29</span><span class="d mark">30</span><span class="d blank"></span><span class="d blank"></span><span class="d blank"></span>
+      <div class="ladder-row">
+        <div class="ladder-top">
+          <div><span class="ladder-week">Week 3</span><span class="ladder-dates">Jul 15–21</span></div>
+          <div class="ladder-pct">23%</div>
         </div>
-        <div class="cal-legend"><strong>Sep 30</strong> — Q3 closes. Qualifying reps confirmed early October.</div>
+        <div class="ladder-track"><div class="ladder-fill" style="--fill:23.1%; animation-delay:70ms;"></div></div>
+        <div class="ladder-targets">On pace: City Boys <span class="mono">$161,538</span> &middot; Ferda <span class="mono">$126,923</span> funded so far</div>
+        
+      </div>
+      <div class="ladder-row milestone">
+        <div class="ladder-top">
+          <div><span class="ladder-week">Week 4</span><span class="ladder-dates">Jul 22–28</span></div>
+          <div class="ladder-pct">31%</div>
+        </div>
+        <div class="ladder-track"><div class="ladder-fill" style="--fill:30.8%; animation-delay:105ms;"></div></div>
+        <div class="ladder-targets">On pace: City Boys <span class="mono">$215,385</span> &middot; Ferda <span class="mono">$169,231</span> funded so far</div>
+        <div class="ladder-note">&#9679; Month 1 check-in</div>
+      </div>
+      <div class="ladder-row">
+        <div class="ladder-top">
+          <div><span class="ladder-week">Week 5</span><span class="ladder-dates">Jul 29–Aug 4</span></div>
+          <div class="ladder-pct">38%</div>
+        </div>
+        <div class="ladder-track"><div class="ladder-fill" style="--fill:38.5%; animation-delay:140ms;"></div></div>
+        <div class="ladder-targets">On pace: City Boys <span class="mono">$269,231</span> &middot; Ferda <span class="mono">$211,538</span> funded so far</div>
+        
+      </div>
+      <div class="ladder-row">
+        <div class="ladder-top">
+          <div><span class="ladder-week">Week 6</span><span class="ladder-dates">Aug 5–11</span></div>
+          <div class="ladder-pct">46%</div>
+        </div>
+        <div class="ladder-track"><div class="ladder-fill" style="--fill:46.2%; animation-delay:175ms;"></div></div>
+        <div class="ladder-targets">On pace: City Boys <span class="mono">$323,077</span> &middot; Ferda <span class="mono">$253,846</span> funded so far</div>
+        
+      </div>
+      <div class="ladder-row">
+        <div class="ladder-top">
+          <div><span class="ladder-week">Week 7</span><span class="ladder-dates">Aug 12–18</span></div>
+          <div class="ladder-pct">54%</div>
+        </div>
+        <div class="ladder-track"><div class="ladder-fill" style="--fill:53.8%; animation-delay:210ms;"></div></div>
+        <div class="ladder-targets">On pace: City Boys <span class="mono">$376,923</span> &middot; Ferda <span class="mono">$296,154</span> funded so far</div>
+        
+      </div>
+      <div class="ladder-row">
+        <div class="ladder-top">
+          <div><span class="ladder-week">Week 8</span><span class="ladder-dates">Aug 19–25</span></div>
+          <div class="ladder-pct">62%</div>
+        </div>
+        <div class="ladder-track"><div class="ladder-fill" style="--fill:61.5%; animation-delay:245ms;"></div></div>
+        <div class="ladder-targets">On pace: City Boys <span class="mono">$430,769</span> &middot; Ferda <span class="mono">$338,462</span> funded so far</div>
+        
+      </div>
+      <div class="ladder-row milestone">
+        <div class="ladder-top">
+          <div><span class="ladder-week">Week 9</span><span class="ladder-dates">Aug 26–Sep 1</span></div>
+          <div class="ladder-pct">69%</div>
+        </div>
+        <div class="ladder-track"><div class="ladder-fill" style="--fill:69.2%; animation-delay:280ms;"></div></div>
+        <div class="ladder-targets">On pace: City Boys <span class="mono">$484,615</span> &middot; Ferda <span class="mono">$380,769</span> funded so far</div>
+        <div class="ladder-note">&#9679; Month 2 check-in</div>
+      </div>
+      <div class="ladder-row">
+        <div class="ladder-top">
+          <div><span class="ladder-week">Week 10</span><span class="ladder-dates">Sep 2–8</span></div>
+          <div class="ladder-pct">77%</div>
+        </div>
+        <div class="ladder-track"><div class="ladder-fill" style="--fill:76.9%; animation-delay:315ms;"></div></div>
+        <div class="ladder-targets">On pace: City Boys <span class="mono">$538,462</span> &middot; Ferda <span class="mono">$423,077</span> funded so far</div>
+        
+      </div>
+      <div class="ladder-row">
+        <div class="ladder-top">
+          <div><span class="ladder-week">Week 11</span><span class="ladder-dates">Sep 9–15</span></div>
+          <div class="ladder-pct">85%</div>
+        </div>
+        <div class="ladder-track"><div class="ladder-fill" style="--fill:84.6%; animation-delay:350ms;"></div></div>
+        <div class="ladder-targets">On pace: City Boys <span class="mono">$592,308</span> &middot; Ferda <span class="mono">$465,385</span> funded so far</div>
+        
+      </div>
+      <div class="ladder-row">
+        <div class="ladder-top">
+          <div><span class="ladder-week">Week 12</span><span class="ladder-dates">Sep 16–22</span></div>
+          <div class="ladder-pct">92%</div>
+        </div>
+        <div class="ladder-track"><div class="ladder-fill" style="--fill:92.3%; animation-delay:385ms;"></div></div>
+        <div class="ladder-targets">On pace: City Boys <span class="mono">$646,154</span> &middot; Ferda <span class="mono">$507,692</span> funded so far</div>
+        
+      </div>
+      <div class="ladder-row milestone">
+        <div class="ladder-top">
+          <div><span class="ladder-week">Week 13</span><span class="ladder-dates">Sep 23–30</span></div>
+          <div class="ladder-pct">100%</div>
+        </div>
+        <div class="ladder-track"><div class="ladder-fill" style="--fill:100.0%; animation-delay:420ms;"></div></div>
+        <div class="ladder-targets">On pace: City Boys <span class="mono">$700,000</span> &middot; Ferda <span class="mono">$550,000</span> funded so far</div>
+        <div class="ladder-note">&#9679; Q3 closes — qualifying reps confirmed early October</div>
       </div>
     </div>
   </section>
